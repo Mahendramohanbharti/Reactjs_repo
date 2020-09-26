@@ -16,7 +16,13 @@
             border: 1px solid orange;
             box-shadow: 2px 6px 12px rgba(0, 0 ,0,0.2);
             text-align: center;
+            
         }
+        textarea{
+            height: 120px;
+            width: 200px;
+        }
+        
         button{
                 color: whitesmoke;
                 background-color: black;
@@ -27,22 +33,50 @@
     <div id="react_container"></div>
     <script type="text/babel">
       class Note extends React.Component{
-          editing(){
-              alert('Editing')
+
+        constructor(props){
+            super(props);
+            this.state={
+                editing:false
+            }
+        }
+          edit=()=>{
+              this.setState({editing:true})
           }
-          deleting(){
+          save=()=>{
+              var val=this.refs.newText.value
+              alert("the value will be stored as: "+val)
+              this.setState({editing:false})
+          }
+          delete(){
               alert('Deleting')
           }
-          render(){
-              return(
+          renderForm=()=>{
+            return(
+                <div class="note">
+                <textarea ref="newText"></textarea>
+                <button onClick={this.save}>Save</button>
+                </div> 
+            )
+          }
+          renderDisplay=()=>{
+            return(
                   <div className="note">
                     <p>{this.props.children}</p>
                     <span>
-                        <button onClick={this.editing}>Edit</button>
-                        <button onClick={this.deleting}>X</button>
+                        <button onClick={this.edit}>Edit</button>
+                        <button onClick={this.delete}>X</button>
                     </span>
                     </div>
               )
+          }
+
+          render(){
+              if(this.state.editing){
+                  return this.renderForm()
+              }else{
+                  return this.renderDisplay()
+              }
           }
       }
       ReactDOM.render(<Note>Hello World!</Note>,document.getElementById('react_container'))
