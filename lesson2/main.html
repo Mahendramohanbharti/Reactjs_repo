@@ -80,6 +80,30 @@
           }
       }
       ReactDOM.render(<Note>Hello World!</Note>,document.getElementById('react_container'))
+      class Board extends React.Component{
+          constructor(props){
+              super(props);
+              this.state={
+                  notes: [
+                      'Call Lakhan',
+                      'Give Prototype',
+                      'Submit Project',
+                       'Send Rahul Email'
+                  
+                  ]
+              }
+          }
+          render(){
+              return(
+                  <div className="board">
+                  {this.state.notes.map((note,i)=>{
+                    return <Note key={i}>{note}</Note>
+                  })}
+                  </div>
+              )
+          }
+      }
+      ReactDOM.render(<Board count={10}/>, document.getElementById('react_container'))
     </script>
     
 </body>
